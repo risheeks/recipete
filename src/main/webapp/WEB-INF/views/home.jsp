@@ -58,15 +58,36 @@ body {
 	
 	<div class="w3-container w3-padding w3-border">
 	  	<div class="w3-container w3-padding w3-black">
-	          <h5>Enter the name of a movie below</h5>
+	          <h4>List all ingredients you wish to use one-by-one:</h4>
 	  	</div>
-	  	<form action="/api" method="POST">
-		   	<p><input class="w3-input w3-border" type="text" name="title" placeholder="Enter movie" ></p>
-		   
-	
-		   		<!-- <input type="submit" value="Submit" /> -->
-		    <p><button type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Movie!</button></p>
+	  	
+	  	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<c:if test="${not empty ingredients}">
+		
+			<table class="table table-striped">
+				<tr>
+					<th><h4>Ingredients</h4></th>
+				</tr>
+				<c:forEach items="${ingredients}" var="ingredient">
+							<c id="ingredient">
+							
+							<tr>
+								<td><h7>${ingredient}</h7></td>
+							</tr>
+							</c>
+				</c:forEach>
+			</table>
+	  	</c:if>
+	  	
+	  	<form action="/" method="POST">
+		   	<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter ingredient" ></p>
+		   	
+		    <p><button type="submit" value="Submit" class="w3-button w3-block w3-border">Add Ingredient</button></p>
 	  	</form> 
+	  	<form action="/api" method="GET">
+	  		<p><button type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
+	  	</form>
 	  </div>
 	</div>
 	

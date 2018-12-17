@@ -5,6 +5,6 @@ Implementation-Title: risheek
 Implementation-Version: 0.0.1-SNAPSHOT
 Implementation-Vendor-Id: com.nr
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
- ot-starter-parent/risheek
+ ot-starter-parent/recipete
 Created-By: Maven Integration for Eclipse
 
