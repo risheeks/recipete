@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: risheek
+Build-Jdk: 10.0.1
+Implementation-Title: risheek
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.nr
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/risheek
+Created-By: Maven Integration for Eclipse
+
