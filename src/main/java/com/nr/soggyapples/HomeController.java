@@ -30,7 +30,7 @@ public class HomeController {
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
 	  HttpSession session = request.getSession();
-	  //ingredients.clear();
+	  ingredients.clear();
 	  
       session.setAttribute("ingredients", ingredients);
       return "/home";
@@ -38,15 +38,17 @@ public class HomeController {
   
   @RequestMapping(value = { "/" }, method = RequestMethod.POST)
   public String welcome(@RequestParam("ingredient") String ingredient, HttpServletRequest request) throws IOException {
-	  HttpSession session = request.getSession();
-	  ingredients.add(ingredient);
-	  session.setAttribute("ingredients", ingredients);
+	  if(!ingredient.equals("")) {
+		  HttpSession session = request.getSession();
+	  	  ingredients.add(ingredient);
+	  	  session.setAttribute("ingredients", ingredients);
+	  }
 	  return "/home";
   }
   
   @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
   public String api(Map<String, Object> model, HttpServletRequest request) throws Exception {
-	  ingredients.clear();
+	  //ingredients.clear();
 	  HttpSession session = request.getSession();
 	  
 	  String api = APIcall("chicken");
