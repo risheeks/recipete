@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class HomeController {
-    
+  
+  //List containing all the ingredients added to the search
   List<String> ingredients = new ArrayList<String>();
 	
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
@@ -37,6 +38,8 @@ public class HomeController {
       return "/home";
   }
   
+  
+  //Called when the user attempts to add ingredients to the list of ingredients
   @RequestMapping(value = { "/" }, method = RequestMethod.POST)
   public String welcome(@RequestParam("ingredient") String ingredient, HttpServletRequest request) throws IOException {
 	  if(!ingredient.trim().equals("") && !ingredients.contains(ingredient.trim())) {
@@ -47,9 +50,10 @@ public class HomeController {
 	  return "/home";
   }
   
+  
+  //Called when the user searches for recipes using a main ingredient
   @RequestMapping(value = { "/api-{type}" }, method = RequestMethod.GET)
   public String api(@RequestParam("main") String mainIng, @PathVariable String type, HttpServletRequest request) throws Exception {
-	  //ingredients.clear();
 	  //System.out.println(type);
 	  HttpSession session = request.getSession();
 	  
@@ -57,8 +61,6 @@ public class HomeController {
 	  List<Recipe> recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
 	  JSONArray arr = obj.getJSONArray("hits");
-      //arr = obj.getJSONArray("recipe");
-	  //System.out.println(arr.length());
       for (int i = 0; i < arr.length(); i++)
       {
     	  JSONObject item = arr.getJSONObject(i);
@@ -68,7 +70,7 @@ public class HomeController {
     	  for (int j = 0; j < ingredients.length(); j++)
           {
     		  JSONObject ingredient = ingredients.getJSONObject(j);
-    		  aing[j] = ingredient.getString("text");//new Ingredient(ingredient.getString("text"), ingredient.getString("weight"));
+    		  aing[j] = ingredient.getString("text");
           }
     	  
           recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
@@ -78,6 +80,7 @@ public class HomeController {
       return "/recipes";
   }
   
+  //The service for the API call with gets the recipes list based on the main ingredient "main"
   private String APIcall(String main) throws Exception {
       String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
       
