@@ -5,10 +5,12 @@ public class Recipe {
 	String label;
 	String image_src;
 	String uri;
+	String[] ingredients;
 	
-	public Recipe(String label, String image_src, String uri) {
+	public Recipe(String label, String image_src, String uri, String[] ingredients) {
 		this.label = label;
 		this.image_src = image_src;
+		this.ingredients = ingredients;
 	}
 
 	public String getLabel() {
@@ -33,6 +35,14 @@ public class Recipe {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public String[] getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(String[] ingredients) {
+		this.ingredients = ingredients;
 	}
 	
 }

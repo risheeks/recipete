@@ -47,6 +47,8 @@
 		</div>
 	</nav>
 	
+	<h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
+	<h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
 	
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
@@ -61,7 +63,15 @@
 						
 						<tr>
 							<td><a href="/pick-${recipe.uri}" ><img height="100" width="100" src="${recipe.image_src}"/></a></td>
-							<td><a href="/pick-${recipe.uri}" >${recipe.label}</a></td>
+							<td><a href="/pick-${recipe.uri}" >${recipe.label}</a>
+								<br>
+									
+									<p>
+									<c:forEach items="${recipe.ingredients}" var="ingredient">
+										${ingredient}, 
+									</c:forEach>
+									</p>
+							</td>
 						</tr>
 						</c>
 			</c:forEach>
