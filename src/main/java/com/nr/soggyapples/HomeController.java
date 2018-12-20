@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,17 +39,18 @@ public class HomeController {
   
   @RequestMapping(value = { "/" }, method = RequestMethod.POST)
   public String welcome(@RequestParam("ingredient") String ingredient, HttpServletRequest request) throws IOException {
-	  if(!ingredient.equals("")) {
+	  if(!ingredient.trim().equals("") && !ingredients.contains(ingredient.trim())) {
 		  HttpSession session = request.getSession();
-	  	  ingredients.add(ingredient);
+		  ingredients.add(ingredient);
 	  	  session.setAttribute("ingredients", ingredients);
 	  }
 	  return "/home";
   }
   
-  @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
-  public String api(@RequestParam("ingredient") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
+  @RequestMapping(value = { "/api-{type}" }, method = RequestMethod.GET)
+  public String api(@RequestParam("main") String mainIng, @PathVariable String type, HttpServletRequest request) throws Exception {
 	  //ingredients.clear();
+	  //System.out.println(type);
 	  HttpSession session = request.getSession();
 	  
 	  String api = APIcall(mainIng);
@@ -56,7 +58,7 @@ public class HomeController {
 	  JSONObject obj = new JSONObject(api);
 	  JSONArray arr = obj.getJSONArray("hits");
       //arr = obj.getJSONArray("recipe");
-	  System.out.println(arr.length());
+	  //System.out.println(arr.length());
       for (int i = 0; i < arr.length(); i++)
       {
     	  JSONObject item = arr.getJSONObject(i);

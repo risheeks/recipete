@@ -95,8 +95,6 @@ body {
 </style>
 
 <body background="food.jpg">
-	<br>
-	  
 	
 	<!-- w3-content defines a container for fixed size centered content, 
 	and is wrapped around the whole page content, except for the footer in this example -->
@@ -114,22 +112,7 @@ body {
 	  	
 	  	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
-		<c:if test="${not empty ingredients}">
 		
-			<table class="table table-striped">
-				<tr>
-					<th><h4>Ingredients</h4></th>
-				</tr>
-				<c:forEach items="${ingredients}" var="ingredient">
-							<c id="ingredient">
-							
-							<tr>
-								<td><h7>${ingredient}</h7></td>
-							</tr>
-							</c>
-				</c:forEach>
-			</table>
-	  	</c:if>
 	  	
 	  	<br>
 	  	
@@ -137,7 +120,7 @@ body {
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
 				<div class="range" style="width: 100%;">
 			  	  <h4>Food Type:</h4>
-				  <input type="range" min="1" max="6" value="4" class="slider" name="type">
+				  <input type="range" min="1" max="6" value="4" class="slider" name="type" id="type">
 				  <div class="sliderticks">
 				    <p>1</p>
 				    <p>2</p>
@@ -163,19 +146,40 @@ body {
 	  	
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
-				<form action="/api" method="GET">
-					<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter main ingredient" ></p>
-					<p><button type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
+				<form action="/api-${type} " method="GET">
+					<h4>Main Ingredient:</h4>
+					<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter main ingredient" ></p>
+					<p><button id="search" type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
 				</form>
 			</div>
 			
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
 			  	<form action="/" method="POST">
-			  		<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter ingredient" ></p>
+			  		<h4>Other Ingredients:</h4>
+			  		<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter ingredient" ></p>
 					<p><button type="submit" value="Submit" class="w3-button w3-block w3-border">Add Ingredient</button></p>
 				</form>
 			</div>
 	  	</div>
+	  	
+	  	<c:if test="${not empty ingredients}">
+		
+			<table class="table table-striped">
+				<tr>
+					<th><h4>Ingredients</h4></th>
+				</tr>
+				<c:forEach items="${ingredients}" var="ingredient">
+							<c id="ingredient">
+							
+							<tr>
+								<td><h7>${ingredient}</h7></td>
+							</tr>
+							</c>
+				</c:forEach>
+			</table>
+	  	</c:if>
+	  	
+	  	<br>
 	  </div>
 	</div>
 	
@@ -183,5 +187,12 @@ body {
 	<footer class="w3-container w3-dark-grey" style="padding:32px">
 	  <p>Built by <a href="https://github.com/risheeks" target="_blank">Risheek</a></p>
 	</footer>
+	
+	<script type="text/javascript">
+		document.getElementById("search").onclick = function() {
+			document.getElementById("type")
+		}
+	</script>
+	
 </body>
 </html>
