@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -42,6 +41,57 @@ body {
 
 .w3-left, .w3-right, .w3-badge {cursor:pointer}
 .w3-badge {height:13px;width:13px;padding:0}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #D3D3D3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #47ed52;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #47ed52;
+  cursor: pointer;
+}
+
+.sliderticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.sliderticks p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 1px;
+  background: #D3D3D3;
+  height: 10px;
+  line-height: 40px;
+  margin: 0 0 20px 0;
+}
+
 </style>
 
 <body background="food.jpg">
@@ -59,6 +109,7 @@ body {
 	<div class="w3-container w3-padding w3-border">
 	  	<div class="w3-container w3-padding w3-black">
 	          <h4>List all ingredients you wish to use one-by-one:</h4>
+	          
 	  	</div>
 	  	
 	  	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -80,14 +131,51 @@ body {
 			</table>
 	  	</c:if>
 	  	
-	  	<form action="/" method="POST">
-		   	<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter ingredient" ></p>
-		   	
-		    <p><button type="submit" value="Submit" class="w3-button w3-block w3-border">Add Ingredient</button></p>
-	  	</form> 
-	  	<form action="/api" method="GET">
-	  		<p><button type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
-	  	</form>
+	  	<br>
+	  	
+	  	<div style="display: flex;">
+			<div style="flex: 1; display: inline-block; padding: 1rem;">
+				<div class="range" style="width: 100%;">
+			  	  <h4>Food Type:</h4>
+				  <input type="range" min="1" max="6" value="4" class="slider" name="type">
+				  <div class="sliderticks">
+				    <p>1</p>
+				    <p>2</p>
+				    <p>3</p>
+				    <p>4</p>
+				    <p>5</p>
+				    <p>6</p>
+				  </div>
+				</div>
+			</div>
+			
+			<div style="flex: 1; display: inline-block;">
+			  	<p>1- low-sodium</p>
+			  	<p>2- low-carb</p>
+			  	<p>3- low-fat</p>
+			  	<p>4- balanced</p>
+			  	<p>5- high-protein</p>
+			  	<p>6- high-fiber</p>
+			</div>
+	  	</div>
+	  	
+	  	
+	  	
+	  	<div style="display: flex;">
+			<div style="flex: 1; display: inline-block; padding: 1rem;">
+				<form action="/api" method="GET">
+					<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter main ingredient" ></p>
+					<p><button type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
+				</form>
+			</div>
+			
+			<div style="flex: 1; display: inline-block; padding: 1rem;">
+			  	<form action="/" method="POST">
+			  		<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter ingredient" ></p>
+					<p><button type="submit" value="Submit" class="w3-button w3-block w3-border">Add Ingredient</button></p>
+				</form>
+			</div>
+	  	</div>
 	  </div>
 	</div>
 	

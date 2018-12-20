@@ -30,7 +30,7 @@ public class HomeController {
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
 	  HttpSession session = request.getSession();
-	  //ingredients.clear();
+	  ingredients.clear();
 	  
       session.setAttribute("ingredients", ingredients);
       return "/home";
@@ -38,31 +38,38 @@ public class HomeController {
   
   @RequestMapping(value = { "/" }, method = RequestMethod.POST)
   public String welcome(@RequestParam("ingredient") String ingredient, HttpServletRequest request) throws IOException {
-	  HttpSession session = request.getSession();
-	  ingredients.add(ingredient);
-	  session.setAttribute("ingredients", ingredients);
+	  if(!ingredient.equals("")) {
+		  HttpSession session = request.getSession();
+	  	  ingredients.add(ingredient);
+	  	  session.setAttribute("ingredients", ingredients);
+	  }
 	  return "/home";
   }
   
   @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
-  public String api(Map<String, Object> model, HttpServletRequest request) throws Exception {
-	  ingredients.clear();
+  public String api(@RequestParam("ingredient") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
+	  //ingredients.clear();
 	  HttpSession session = request.getSession();
 	  
-	  String api = APIcall("chicken");
+	  String api = APIcall(mainIng);
 	  List<Recipe> recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
 	  JSONArray arr = obj.getJSONArray("hits");
       //arr = obj.getJSONArray("recipe");
+	  System.out.println(arr.length());
       for (int i = 0; i < arr.length(); i++)
       {
     	  JSONObject item = arr.getJSONObject(i);
-    	  //System.out.println(item.toString());
-    	  
     	  JSONObject arr1 = item.getJSONObject("recipe");
-    	  //System.out.println(arr1.toString());
-          System.out.println(arr1.getString("label"));
-          recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri")));
+    	  JSONArray ingredients = arr1.getJSONArray("ingredients");
+    	  String[] aing = new String[ingredients.length()];
+    	  for (int j = 0; j < ingredients.length(); j++)
+          {
+    		  JSONObject ingredient = ingredients.getJSONObject(j);
+    		  aing[j] = ingredient.getString("text");//new Ingredient(ingredient.getString("text"), ingredient.getString("weight"));
+          }
+    	  
+          recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
       }
 	  
       session.setAttribute("recipes", recipes);
@@ -70,7 +77,7 @@ public class HomeController {
   }
   
   private String APIcall(String main) throws Exception {
-      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&q=" + main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
+      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
       
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
