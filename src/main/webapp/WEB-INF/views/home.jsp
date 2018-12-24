@@ -128,36 +128,32 @@ body {
 	  	<br>
 	  	
 	  	<div style="display: flex;">
-			<div style="flex: 1; display: inline-block; padding: 1rem;">
-				<div class="range" style="width: 100%;">
-			  	  <h4>Food Type:</h4>
-				  <input type="range" min="1" max="6" value="4" class="slider" name="type" id="type">
-				  <div class="sliderticks">
-				    <p>1</p>
-				    <p>2</p>
-				    <p>3</p>
-				    <p>4</p>
-				    <p>5</p>
-				    <p>6</p>
-				  </div>
-				</div>
-			</div>
-			
-			<div style="flex: 1; display: inline-block;">
-			  	<p>1- low-sodium</p>
-			  	<p>2- low-carb</p>
-			  	<p>3- low-fat</p>
-			  	<p>4- balanced</p>
-			  	<p>5- high-protein</p>
-			  	<p>6- high-fiber</p>
-			</div>
 	  	</div>
 	  	
 	  	
 	  	
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
-				<form action="/api-${type}" method="GET">
+				<form action="/api" method="GET">
+					<div style="display: flex;">
+						<div style="flex: 1; display: inline-block; padding: 1rem;">
+							<div class="range" style="width: 100%;">
+						  	  <h4>Food Type:</h4>
+							  <input type="range" min="1" max="6" value="4" class="slider" name="type" id="type">
+							  <div class="sliderticks">
+							    <p>1</p>
+							    <p>2</p>
+							    <p>3</p>
+							    <p>4</p>
+							    <p>5</p>
+							    <p>6</p>
+							  </div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+					<br>
 					<h4>Main Ingredient:</h4>
 					<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter main ingredient" ></p>
 					<p><button id="search" type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
@@ -166,6 +162,16 @@ body {
 			
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
 			  	<form action="/" method="POST">
+			  		<div style="display: flex;">
+				  		<div style="flex: 1; display: inline-block;">
+						  	<p>1- low-sodium</p>
+						  	<p>2- low-carb</p>
+						  	<p>3- low-fat</p>
+						  	<p>4- balanced</p>
+						  	<p>5- high-protein</p>
+						  	<p>6- high-fiber</p>
+						</div>
+					</div>
 			  		<h4>Other Ingredients:</h4>
 			  		<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter ingredient" ></p>
 					<p><button type="submit" value="Submit" class="w3-button w3-block w3-border">Add Ingredient</button></p>
@@ -183,7 +189,15 @@ body {
 							<c id="ingredient">
 							
 							<tr>
-								<td><h7>${ingredient}</h7></td>
+								<td><p>${ingredient}</h7></p>
+								<td>
+									<button type="button" class="close" aria-label="Close" onclick="location.href='/remove-${ingredient}'">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								</td>
+							</tr>
+							<tr>
+								
 							</tr>
 							</c>
 				</c:forEach>

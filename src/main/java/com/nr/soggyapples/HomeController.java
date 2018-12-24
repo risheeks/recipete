@@ -51,13 +51,24 @@ public class HomeController {
   }
   
   
+//Called when the user attempts to add ingredients to the list of ingredients
+  @RequestMapping(value = { "/remove-{ingredient}" }, method = RequestMethod.GET)
+  public String remove(HttpServletRequest request, @PathVariable String ingredient) throws IOException {
+	  for (String s: ingredients) {
+		  if(s.equals(ingredient)) ingredients.remove(s);
+	  }
+	  System.out.println("removing " + ingredient);
+	  return "/";
+  }
+  
+  
   //Called when the user searches for recipes using a main ingredient
-  @RequestMapping(value = { "/api-{type}" }, method = RequestMethod.GET)
-  public String api(@RequestParam("main") String mainIng, @PathVariable String type, HttpServletRequest request) throws Exception {
+  @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
+  public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
 	  //System.out.println(type);
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
-	  String api = APIcall(mainIng);
+	  String api = APIcall(mainIng, type);
 	  List<Recipe> recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
 	  JSONArray arr = obj.getJSONArray("hits");
@@ -75,14 +86,28 @@ public class HomeController {
     	  
           recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
       }
-	  
+	  recipes = sort(recipes);
       session.setAttribute("recipes", recipes);
       return "/recipes";
   }
   
   //The service for the API call with gets the recipes list based on the main ingredient "main"
-  private String APIcall(String main) throws Exception {
-      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + URLEncoder.encode(main, "UTF-8");//main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
+  private String APIcall(String main, String type) throws Exception {
+	  if(type.equals("1")) {
+		  type = "low-sodium";
+	  } else if(type.equals("2")) {
+		  type = "low-carb";
+	  } else if(type.equals("3")) {
+		  type = "low-fat";
+	  } else if(type.equals("4")) {
+		  type = "balanced";
+	  } else if(type.equals("5")) {
+		  type = "high-protein";
+	  } else if(type.equals("6")) {
+		  type = "high-fiber";
+	  }
+	  
+      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + URLEncoder.encode(main, "UTF-8") + "&diet=" + type;
       
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -115,15 +140,28 @@ public class HomeController {
 	  
 	  List<Recipe> sr = new ArrayList<Recipe>();
 	  List<Recipe> done = new ArrayList<Recipe>();
-	  while(done.size() != recipes.size()) {
+	  //while(done.size() != recipes.size()) {
 		  for(Recipe r: recipes) {
 			  if(done.contains(r)) continue;
-			  
+			  if(containsAll(r)) {
+				  sr.add(r);
+			  }
 		  }
-	  }
+	  //}
 	  
-	  return recipes;
+	  return sr;
   }
   
+  private boolean containsAll(Recipe r) {
+	  for(String s: r.ingredients) {
+		  if(!ingredients.contains(s)) return false;
+	  }
+	  return true;
+  }
+  
+  @RequestMapping(value = { "/error" }, method = RequestMethod.GET)
+  public String error() throws IOException {
+	  return "/error";
+  }
   
 }
