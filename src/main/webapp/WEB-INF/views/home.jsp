@@ -96,6 +96,17 @@ body {
 
 <body background="food.jpg">
 	
+	
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Home</a></li>
+					<li><a href="/about">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<!-- w3-content defines a container for fixed size centered content, 
 	and is wrapped around the whole page content, except for the footer in this example -->
 	<div class="w3-content" style="max-width:1600px">
@@ -146,7 +157,7 @@ body {
 	  	
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
-				<form action="/api-${type} " method="GET">
+				<form action="/api-${type}" method="GET">
 					<h4>Main Ingredient:</h4>
 					<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter main ingredient" ></p>
 					<p><button id="search" type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
@@ -187,12 +198,6 @@ body {
 	<footer class="w3-container w3-dark-grey" style="padding:32px">
 	  <p>Built by <a href="https://github.com/risheeks" target="_blank">Risheek</a></p>
 	</footer>
-	
-	<script type="text/javascript">
-		document.getElementById("search").onclick = function() {
-			document.getElementById("type")
-		}
-	</script>
-	
+		
 </body>
 </html>

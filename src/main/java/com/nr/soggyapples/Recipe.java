@@ -10,6 +10,7 @@ public class Recipe {
 	public Recipe(String label, String image_src, String uri, String[] ingredients) {
 		this.label = label;
 		this.image_src = image_src;
+		this.uri = uri.split("#")[1];
 		this.ingredients = ingredients;
 	}
 
