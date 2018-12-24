@@ -56,7 +56,7 @@ public class HomeController {
   public String api(@RequestParam("main") String mainIng, @PathVariable String type, HttpServletRequest request) throws Exception {
 	  //System.out.println(type);
 	  HttpSession session = request.getSession();
-	  
+	  session.setAttribute("main", mainIng);
 	  String api = APIcall(mainIng);
 	  List<Recipe> recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
@@ -82,7 +82,7 @@ public class HomeController {
   
   //The service for the API call with gets the recipes list based on the main ingredient "main"
   private String APIcall(String main) throws Exception {
-      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
+      String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + URLEncoder.encode(main, "UTF-8");//main;//movie_url + URLEncoder.encode(id, "UTF-8")+suffix;
       
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -109,6 +109,20 @@ public class HomeController {
       return response.toString();
       //System.out.println(response.toString());
 
+  }
+  
+  private List<Recipe> sort(List<Recipe> recipes) {
+	  
+	  List<Recipe> sr = new ArrayList<Recipe>();
+	  List<Recipe> done = new ArrayList<Recipe>();
+	  while(done.size() != recipes.size()) {
+		  for(Recipe r: recipes) {
+			  if(done.contains(r)) continue;
+			  
+		  }
+	  }
+	  
+	  return recipes;
   }
   
   
