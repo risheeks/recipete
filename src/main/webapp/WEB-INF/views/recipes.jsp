@@ -70,7 +70,17 @@
 										<tr>${ingredient}</tr>
 										<br>
 									</c:forEach>
-									<tr>${recipe.extraIng}</tr>
+									<tr>
+										<td><p style="color:red;">Additional Required Ingredients:</p></td>
+										<td>
+											<table class="table">
+												<c:forEach items="${recipe.extraIng}" var="ing">
+													<tr>${ing}</tr>
+													<br>
+												</c:forEach>
+											</table>
+										</td>
+									</tr>
 								</table>
 							</td>
 						</tr>

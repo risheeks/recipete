@@ -149,9 +149,9 @@ body {
 					</div>
 					<fieldset>      
 			                <legend>Health Preferences</legend>      
-			                <input type="checkbox" name="vegan" value="Cats">&nbsp Vegan &nbsp &nbsp &nbsp
-			                <input type="checkbox" name="veg" value="Dogs">&nbsp Vegetarian &nbsp &nbsp &nbsp
-			                <input type="checkbox" name="peanut" value="Birds">&nbsp Peanut-free &nbsp &nbsp &nbsp
+			                <input type="checkbox" name="vegan" value="vegan">&nbsp; Vegan &nbsp; &nbsp; &nbsp;
+			                <input type="checkbox" name="veg" value="veg">&nbsp; Vegetarian &nbsp; &nbsp; &nbsp;
+			                <input type="checkbox" name="peanut" value="peanut">&nbsp; Peanut-free &nbsp; &nbsp; &nbsp;
 			        </fieldset>
 					<h4>Main Ingredient:</h4>
 					<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter main ingredient" ></p>
