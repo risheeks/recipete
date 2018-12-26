@@ -53,50 +53,44 @@
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<div class="w3-container w3-white w3-light-grey">
+		
 		<table class="table table-striped">
 			<tr>
-					<th>Image</th>
-					<th>Label</th>
+				<td><img height="300" width="250" src="${rec.image_src}"/> </td>
+				<td><h1>${rec.label}</h1></td>
 			</tr>
-			<c:forEach items="${recipes}" var="recipe">
-						<c id="recipe">
-						
+			<tr>
+				<td>
+					<table class="table">
+						<tr><h4>Ingredients Needed:</h4></tr>
+						<c:forEach items="${rec.ingredients}" var="ingredient">
+							<tr>${ingredient}</tr>
+							<br>
+						</c:forEach>
 						<tr>
-							<td><a href="/pick-${recipe.uri}" ><img height="100" width="100" src="${recipe.image_src}"/></a></td>
 							<td>
 								<table class="table">
-									<tr><a href="/pick-${recipe.uri}" ><h6>${recipe.label}</h6></a></tr>
-									<c:forEach items="${recipe.ingredients}" var="ingredient">
-										<tr>${ingredient}</tr>
+									<tr><p style="color:green;">Ingredients you have:</p></tr>
+									<c:forEach items="${rec.have}" var="hIng">
+										<tr>${hIng}</tr>
 										<br>
 									</c:forEach>
-									<tr>
-										<td>
-											<table class="table">
-												<tr><p style="color:green;">Ingredients you have:</p></tr>
-												<c:forEach items="${recipe.have}" var="hIng">
-													<tr>${hIng}</tr>
-													<br>
-												</c:forEach>
-											</table>
-										</td>
-										
-										<td>
-											<table class="table">
-												<tr><p style="color:red;">Additional Required Ingredients:</p></tr>
-												<c:forEach items="${recipe.extraIng}" var="ing">
-													
-													<tr>${ing}</tr>
-													<br>
-												</c:forEach>
-											</table>
-										</td>
-									</tr>
+								</table>
+							</td>
+						
+							<td>
+								<table class="table">
+									<tr><p style="color:red;">Additional Required Ingredients:</p></tr>
+									<c:forEach items="${rec.extraIng}" var="ing">
+										<tr>${ing}</tr>
+										<br>
+									</c:forEach>
 								</table>
 							</td>
 						</tr>
-						</c>
-			</c:forEach>
+					</table>
+				</td>
+			</tr>
 		</table>
 	</div>
 	

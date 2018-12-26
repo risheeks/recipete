@@ -31,6 +31,7 @@ public class HomeController {
   //List containing all the ingredients added to the search
   List<String> ingredients = new ArrayList<String>();
   List<String> health = new ArrayList<String>();
+  List<Recipe> recipes;
   
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
@@ -89,7 +90,7 @@ public class HomeController {
 	  }
 	  
 	  String api = APIcall(mainIng, type);
-	  List<Recipe> recipes = new ArrayList<Recipe>();
+	  recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
 	  JSONArray arr = obj.getJSONArray("hits");
       for (int i = 0; i < arr.length(); i++)
@@ -112,6 +113,21 @@ public class HomeController {
 	  Collections.sort(recipes, new SortbyExtraIng());
       session.setAttribute("recipes", recipes);
       return "/recipes";
+  }
+  
+//Called when the user searches for recipes using a main ingredient
+  @RequestMapping(value = { "/pick-{recipe}" }, method = RequestMethod.GET)
+  public String pickRecipe(@PathVariable String recipe, HttpServletRequest request) throws Exception {
+	  HttpSession session = request.getSession();
+	  Recipe rec = new Recipe();
+	  for(Recipe p: recipes) {
+		  if(p.uri.equals(recipe)) {
+			  rec = p;
+		  }
+	  }
+	  System.out.println("image_src: " + rec.label);
+	  session.setAttribute("rec", rec);
+	  return "/pick";
   }
   
   //The service for the API call with gets the recipes list based on the main ingredient "main"
@@ -188,6 +204,7 @@ public class HomeController {
 			  if(s.contains(t) || t.contains(s)) {
 				  //System.out.println(r.label + ": " + s + ", size: " + r.ingredients.length);
 				  check = true;
+				  r.have.add(s);
 			  }
 		  }
 		  if(check == false) {
