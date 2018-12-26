@@ -6,12 +6,14 @@ public class Recipe {
 	String image_src;
 	String uri;
 	String[] ingredients;
+	int extraIng;
 	
 	public Recipe(String label, String image_src, String uri, String[] ingredients) {
 		this.label = label;
 		this.image_src = image_src;
 		this.uri = uri.split("#")[1];
 		this.ingredients = ingredients;
+		extraIng = 0;
 	}
 
 	public String getLabel() {
@@ -44,6 +46,14 @@ public class Recipe {
 
 	public void setIngredients(String[] ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	public int getExtraIng() {
+		return extraIng;
+	}
+
+	public void setExtraIng(int extraIng) {
+		this.extraIng = extraIng;
 	}
 	
 }
