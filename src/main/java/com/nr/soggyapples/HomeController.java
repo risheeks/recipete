@@ -33,7 +33,6 @@ public class HomeController {
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
 	  HttpSession session = request.getSession();
 	  ingredients.clear();
-	  
       session.setAttribute("ingredients", ingredients);
       return "/home";
   }
@@ -51,21 +50,23 @@ public class HomeController {
   }
   
   
-//Called when the user attempts to add ingredients to the list of ingredients
+  //Called when the user attempts to add ingredients to the list of ingredients
   @RequestMapping(value = { "/remove-{ingredient}" }, method = RequestMethod.GET)
   public String remove(HttpServletRequest request, @PathVariable String ingredient) throws IOException {
+	  HttpSession session = request.getSession();
+	  String p="";
 	  for (String s: ingredients) {
-		  if(s.equals(ingredient)) ingredients.remove(s);
+		  if(s.equals(ingredient)) p=s;
 	  }
-	  System.out.println("removing " + ingredient);
-	  return "/";
+	  ingredients.remove(p);
+      session.setAttribute("ingredients", ingredients);
+	  return "/home";
   }
   
   
   //Called when the user searches for recipes using a main ingredient
   @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
   public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
-	  //System.out.println(type);
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
 	  String api = APIcall(mainIng, type);
@@ -86,6 +87,8 @@ public class HomeController {
     	  
           recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
       }
+      ingredients.add(mainIng);
+      System.out.println(mainIng);
 	  recipes = sort(recipes);
       session.setAttribute("recipes", recipes);
       return "/recipes";
@@ -112,12 +115,10 @@ public class HomeController {
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-      // optional default is GET
+      // optional, default is GET
       con.setRequestMethod("GET");
 
       //add request header
-      //con.setRequestProperty("User-Agent", USER_AGENT);
-
       int responseCode = con.getResponseCode();
       System.out.println("\nSending 'GET' request to URL : " + url);
       System.out.println("Response Code : " + responseCode);
@@ -132,29 +133,52 @@ public class HomeController {
       }
       in.close();
       return response.toString();
-      //System.out.println(response.toString());
-
   }
   
   private List<Recipe> sort(List<Recipe> recipes) {
-	  
 	  List<Recipe> sr = new ArrayList<Recipe>();
-	  List<Recipe> done = new ArrayList<Recipe>();
-	  //while(done.size() != recipes.size()) {
+	  int max = maxLength(recipes);
+	  for(int i=0; ; i++) {
 		  for(Recipe r: recipes) {
-			  if(done.contains(r)) continue;
-			  if(containsAll(r)) {
+			  if(sr.contains(r)) continue;
+			  if(containsAll(r, i)) {
+				  r.extraIng = i;
 				  sr.add(r);
+				  //System.out.println(r.extraIng);
 			  }
 		  }
-	  //}
+		  if(sr.size() == recipes.size()) break;
+	  }
+	  for(Recipe r: recipes) {
+		  System.out.println(r.extraIng);
+	  }
 	  
 	  return sr;
   }
   
-  private boolean containsAll(Recipe r) {
+  private int maxLength(List<Recipe> recipes) {
+	  int max=0;
+	  for(Recipe r: recipes) {
+		  if(r.ingredients.length > max) max = r.ingredients.length;
+	  }
+	  return max;
+  }
+  
+  private boolean containsAll(Recipe r, int left) {
+	  boolean check = false;
+	  int leave = 0;
+	  //System.out.println(left + r.extraIng);
 	  for(String s: r.ingredients) {
-		  if(!ingredients.contains(s)) return false;
+		  for(String t: ingredients) {
+			  if(s.contains(t) || t.contains(s)) {
+				  //System.out.println(s + " and " + t);
+				  check = true;
+			  }
+		  }
+		  if(check == false) {
+			  leave++;
+		  }
+		  if(leave > left) return false;
 	  }
 	  return true;
   }

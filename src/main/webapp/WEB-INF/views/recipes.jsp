@@ -63,14 +63,15 @@
 						
 						<tr>
 							<td><a href="/pick-${recipe.uri}" ><img height="100" width="100" src="${recipe.image_src}"/></a></td>
-							<td><a href="/pick-${recipe.uri}" >${recipe.label}</a>
-								<br>
-									
-									<p>
+							<td>
+								<table class="table">
+									<tr><a href="/pick-${recipe.uri}" ><h6>${recipe.label}</h6></a></tr>
 									<c:forEach items="${recipe.ingredients}" var="ingredient">
-										${ingredient}, 
+										<tr>${ingredient}</tr>
+										<br>
 									</c:forEach>
-									</p>
+									<tr>${recipe.extraIng}</tr>
+								</table>
 							</td>
 						</tr>
 						</c>

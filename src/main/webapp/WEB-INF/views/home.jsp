@@ -123,14 +123,10 @@ body {
 	  	
 	  	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
-		
-	  	
 	  	<br>
 	  	
 	  	<div style="display: flex;">
 	  	</div>
-	  	
-	  	
 	  	
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
@@ -151,9 +147,12 @@ body {
 							</div>
 						</div>
 					</div>
-					<br>
-					<br>
-					<br>
+					<fieldset>      
+			                <legend>Health Preferences</legend>      
+			                <input type="checkbox" name="vegan" value="Cats">&nbsp Vegan &nbsp &nbsp &nbsp
+			                <input type="checkbox" name="veg" value="Dogs">&nbsp Vegetarian &nbsp &nbsp &nbsp
+			                <input type="checkbox" name="peanut" value="Birds">&nbsp Peanut-free &nbsp &nbsp &nbsp
+			        </fieldset>
 					<h4>Main Ingredient:</h4>
 					<p><input class="w3-input w3-border" type="text" name="main" placeholder="Enter main ingredient" ></p>
 					<p><button id="search" type="submit" value="Submit" class="w3-button w3-block w3-cyan">Find Recipes!</button></p>
@@ -184,6 +183,7 @@ body {
 			<table class="table table-striped">
 				<tr>
 					<th><h4>Ingredients</h4></th>
+					<th></th>
 				</tr>
 				<c:forEach items="${ingredients}" var="ingredient">
 							<c id="ingredient">
