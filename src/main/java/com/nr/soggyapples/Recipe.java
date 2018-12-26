@@ -1,19 +1,22 @@
 package com.nr.soggyapples;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Recipe {
 	
 	String label;
 	String image_src;
 	String uri;
 	String[] ingredients;
-	int extraIng;
+	List<String> extraIng;
 	
 	public Recipe(String label, String image_src, String uri, String[] ingredients) {
 		this.label = label;
 		this.image_src = image_src;
 		this.uri = uri.split("#")[1];
 		this.ingredients = ingredients;
-		extraIng = 0;
+		extraIng = new ArrayList<String>();
 	}
 
 	public String getLabel() {
@@ -48,11 +51,11 @@ public class Recipe {
 		this.ingredients = ingredients;
 	}
 
-	public int getExtraIng() {
+	public List<String> getExtraIng() {
 		return extraIng;
 	}
 
-	public void setExtraIng(int extraIng) {
+	public void setExtraIng(List<String> extraIng) {
 		this.extraIng = extraIng;
 	}
 	

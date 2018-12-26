@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +30,13 @@ public class HomeController {
   
   //List containing all the ingredients added to the search
   List<String> ingredients = new ArrayList<String>();
-	
+  List<String> health = new ArrayList<String>();
+  
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
 	  HttpSession session = request.getSession();
 	  ingredients.clear();
+	  health.clear();
       session.setAttribute("ingredients", ingredients);
       return "/home";
   }
@@ -58,6 +62,7 @@ public class HomeController {
 	  for (String s: ingredients) {
 		  if(s.equals(ingredient)) p=s;
 	  }
+	  System.out.println("Removing " + p);
 	  ingredients.remove(p);
       session.setAttribute("ingredients", ingredients);
 	  return "/home";
@@ -69,6 +74,20 @@ public class HomeController {
   public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
+	  System.out.println(request.getParameterMap().containsKey("vegan"));
+	  System.out.println(request.getParameterMap().containsKey("veg"));
+	  System.out.println(request.getParameterMap().containsKey("peanut"));
+	  
+	  if(request.getParameterMap().containsKey("vegan")) {
+		  health.add("vegan");
+	  }
+	  if(request.getParameterMap().containsKey("veg")) {
+		  health.add("vegetarian");
+	  }
+	  if(request.getParameterMap().containsKey("peanut")) {
+		  health.add(URLEncoder.encode("peanut-free", "UTF-8"));
+	  }
+	  
 	  String api = APIcall(mainIng, type);
 	  List<Recipe> recipes = new ArrayList<Recipe>();
 	  JSONObject obj = new JSONObject(api);
@@ -88,8 +107,9 @@ public class HomeController {
           recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
       }
       ingredients.add(mainIng);
-      System.out.println(mainIng);
+      //System.out.println(mainIng);
 	  recipes = sort(recipes);
+	  Collections.sort(recipes, new SortbyExtraIng());
       session.setAttribute("recipes", recipes);
       return "/recipes";
   }
@@ -111,6 +131,10 @@ public class HomeController {
 	  }
 	  
       String url = "https://api.edamam.com/search?app_id=a67c62b7&app_key=0c10d50f0e83492d03daffb8f64347d1&to=30&q=" + URLEncoder.encode(main, "UTF-8") + "&diet=" + type;
+      
+      for(String s: health) {
+    	  url += "&health=" + s;
+      }
       
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -137,50 +161,43 @@ public class HomeController {
   
   private List<Recipe> sort(List<Recipe> recipes) {
 	  List<Recipe> sr = new ArrayList<Recipe>();
-	  int max = maxLength(recipes);
 	  for(int i=0; ; i++) {
 		  for(Recipe r: recipes) {
 			  if(sr.contains(r)) continue;
-			  if(containsAll(r, i)) {
-				  r.extraIng = i;
+			  containsAll(r);
+			  if(r.extraIng.size() > i) {
 				  sr.add(r);
-				  //System.out.println(r.extraIng);
 			  }
 		  }
-		  if(sr.size() == recipes.size()) break;
-	  }
-	  for(Recipe r: recipes) {
-		  System.out.println(r.extraIng);
-	  }
-	  
+		  
+		  if(sr.size() == recipes.size()) {
+			  break;
+		  }
+		  
+	  }	  
 	  return sr;
   }
   
-  private int maxLength(List<Recipe> recipes) {
-	  int max=0;
-	  for(Recipe r: recipes) {
-		  if(r.ingredients.length > max) max = r.ingredients.length;
-	  }
-	  return max;
-  }
-  
-  private boolean containsAll(Recipe r, int left) {
+  private void containsAll(Recipe r) {
 	  boolean check = false;
-	  int leave = 0;
+	  //int leave = 0;
 	  //System.out.println(left + r.extraIng);
 	  for(String s: r.ingredients) {
+		  check = false;
 		  for(String t: ingredients) {
 			  if(s.contains(t) || t.contains(s)) {
-				  //System.out.println(s + " and " + t);
+				  //System.out.println(r.label + ": " + s + ", size: " + r.ingredients.length);
 				  check = true;
 			  }
 		  }
 		  if(check == false) {
-			  leave++;
+			  //leave++;
+			  r.extraIng.add(s);
 		  }
-		  if(leave > left) return false;
 	  }
-	  return true;
+	  //System.out.println("Leaving: " + r.extraIng.size());
+	  //if(leave == left) return false;
+	  //return true;
   }
   
   @RequestMapping(value = { "/error" }, method = RequestMethod.GET)
@@ -189,3 +206,13 @@ public class HomeController {
   }
   
 }
+
+class SortbyExtraIng implements Comparator<Recipe> 
+{ 
+    // Used for sorting in ascending order of 
+    // roll number 
+    public int compare(Recipe a, Recipe b) 
+    { 
+        return a.extraIng.size() - b.extraIng.size(); 
+    } 
+} 
