@@ -10,6 +10,11 @@ public class Recipe {
 	String uri;
 	String[] ingredients;
 	List<String> extraIng;
+	List<String> have;
+	
+	public Recipe() {
+		
+	}
 	
 	public Recipe(String label, String image_src, String uri, String[] ingredients) {
 		this.label = label;
@@ -17,6 +22,7 @@ public class Recipe {
 		this.uri = uri.split("#")[1];
 		this.ingredients = ingredients;
 		extraIng = new ArrayList<String>();
+		have = new ArrayList<String>();
 	}
 
 	public String getLabel() {
@@ -57,6 +63,14 @@ public class Recipe {
 
 	public void setExtraIng(List<String> extraIng) {
 		this.extraIng = extraIng;
+	}
+
+	public List<String> getHave() {
+		return have;
+	}
+
+	public void setHave(List<String> have) {
+		this.have = have;
 	}
 	
 }
