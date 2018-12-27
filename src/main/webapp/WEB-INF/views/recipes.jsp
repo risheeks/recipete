@@ -36,6 +36,11 @@
 </head>
 <body>
 	
+	
+	
+	<h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
+	<h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
+	
 	<nav class="navbar navbar-inverse">
 		<div class="container">
 			<div id="navbar" class="collapse navbar-collapse">
@@ -46,9 +51,6 @@
 			</div>
 		</div>
 	</nav>
-	
-	<h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
-	<h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
 	
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
@@ -66,10 +68,10 @@
 							<td>
 								<table class="table">
 									<tr><a href="/pick-${recipe.uri}" ><h6>${recipe.label}</h6></a></tr>
-									<c:forEach items="${recipe.ingredients}" var="ingredient">
+									<%-- <c:forEach items="${recipe.ingredients}" var="ingredient">
 										<tr>${ingredient}</tr>
 										<br>
-									</c:forEach>
+									</c:forEach> --%>
 									<tr>
 										<td>
 											<table class="table">

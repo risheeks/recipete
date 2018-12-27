@@ -29,73 +29,78 @@
 
 
 <style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-#limit {max-width: 500px;}
-body {
- 
-  background-image: "food.jpg";
-  background-size: 100% 100%;
-   
-}
-
-.w3-left, .w3-right, .w3-badge {cursor:pointer}
-.w3-badge {height:13px;width:13px;padding:0}
-
-.slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #D3D3D3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #47ed52;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #47ed52;
-  cursor: pointer;
-}
-
-.sliderticks {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-}
-
-.sliderticks p {
+.custom-select {
   position: relative;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  width: 1px;
-  background: #D3D3D3;
-  height: 10px;
-  line-height: 40px;
-  margin: 0 0 20px 0;
+  font-family: Arial;
 }
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 
 </style>
 
-<body background="food.jpg">
+<body>
 	
+	
+	
+	<!-- w3-content defines a container for fixed size centered content, 
+	and is wrapped around the whole page content, except for the footer in this example -->
+	
+	  
+	    <h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
+	    <h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
 	
 	<nav class="navbar navbar-inverse">
 		<div class="container">
@@ -107,16 +112,9 @@ body {
 			</div>
 		</div>
 	</nav>
-	<!-- w3-content defines a container for fixed size centered content, 
-	and is wrapped around the whole page content, except for the footer in this example -->
-	<div class="w3-content" style="max-width:1600px">
-	
-	  
-	    <h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
-	    <h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
 	
 	<div class="w3-container w3-padding w3-border">
-	  	<div class="w3-container w3-padding w3-black">
+	  	<div class="w3-container w3-padding w3-cyan">
 	          <h4>List all ingredients you wish to use one-by-one:</h4>
 	          
 	  	</div>
@@ -131,23 +129,18 @@ body {
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
 				<form action="/api" method="GET">
-					<div style="display: flex;">
-						<div style="flex: 1; display: inline-block; padding: 1rem;">
-							<div class="range" style="width: 100%;">
-						  	  <h4>Food Type:</h4>
-							  <input type="range" min="1" max="6" value="4" class="slider" name="type" id="type">
-							  <div class="sliderticks">
-							    <p>1</p>
-							    <p>2</p>
-							    <p>3</p>
-							    <p>4</p>
-							    <p>5</p>
-							    <p>6</p>
-							  </div>
-							</div>
-						</div>
+					<h4>Diet:</h4>
+					<div class="custom-select" style="width:200px;">
+					<select name="type" style="color:cyan">
+					  <option value="4">balanced</option>
+					  <option value="1">low-sodium</option>
+					  <option value="2">low-carb</option>
+					  <option value="3">low-fat</option>
+					  <option value="5">high-protein</option>
+					  <option value="6">high-fiber</option>
+					</select>
 					</div>
-					<fieldset>      
+					<fieldset>
 			                <legend>Health Preferences</legend>      
 			                <input type="checkbox" name="vegan" value="vegan">&nbsp; Vegan &nbsp; &nbsp; &nbsp;
 			                <input type="checkbox" name="veg" value="veg">&nbsp; Vegetarian &nbsp; &nbsp; &nbsp;
@@ -206,7 +199,6 @@ body {
 	  	
 	  	<br>
 	  </div>
-	</div>
 	
 	<!-- Footer -->
 	<footer class="w3-container w3-dark-grey" style="padding:32px">
@@ -214,4 +206,86 @@ body {
 	</footer>
 		
 </body>
+
+<<script type="text/javascript">
+<!--
+
+//-->
+var x, i, j, selElmnt, a, b, c;
+/* Look for any elements with the class "custom-select": */
+x = document.getElementsByClassName("custom-select");
+for (i = 0; i < x.length; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  /* For each element, create a new DIV that will act as the selected item: */
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /* For each element, create a new DIV that will contain the option list: */
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < selElmnt.length; j++) {
+    /* For each option in the original select element,
+    create a new DIV that will act as an option item: */
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < s.length; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            for (k = 0; k < y.length; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+    /* When the select box is clicked, close any other select boxes,
+    and open/close the current select box: */
+    e.stopPropagation();
+    closeAllSelect(this);
+    this.nextSibling.classList.toggle("select-hide");
+    this.classList.toggle("select-arrow-active");
+  });
+}
+
+function closeAllSelect(elmnt) {
+  /* A function that will close all select boxes in the document,
+  except the current select box: */
+  var x, y, i, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  for (i = 0; i < y.length; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < x.length; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+
+/* If the user clicks anywhere outside the select box,
+then close all select boxes: */
+document.addEventListener("click", closeAllSelect);
+
+</script>
+
 </html>
