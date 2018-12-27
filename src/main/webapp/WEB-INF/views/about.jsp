@@ -35,9 +35,7 @@
 
 </head>
 <body>
-	
-	
-	
+
 	<h1 class="w3-xxxlarge w3-center"><b>ReciPete</b></h1>
 	<h3 class=" w3-center">Find your favorite recipes based on the <span class="w3-tag">ingredients you have!</span></h3>
 	
@@ -51,57 +49,37 @@
 			</div>
 		</div>
 	</nav>
+  
 	
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<div class="w3-container w3-white w3-light-grey">
+		<h1>Development Team</h1>
 		<table class="table table-striped">
 			<tr>
-					<th>Image</th>
-					<th>Label</th>
+					<th><h3>Name:</h3></th>
+					<th><h3>Risheek Narayanadevarakere</h3></th>
 			</tr>
-			<c:forEach items="${recipes}" var="recipe">
-						<c id="recipe">
-						
-						<tr>
-							<td><a href="/pick-${recipe.uri}" ><img height="100" width="100" src="${recipe.image_src}"/></a></td>
-							<td>
-								<table class="table">
-									<tr><a href="/pick-${recipe.uri}" ><h6>${recipe.label}</h6></a></tr>
-									<%-- <c:forEach items="${recipe.ingredients}" var="ingredient">
-										<tr>${ingredient}</tr>
-										<br>
-									</c:forEach> --%>
-									<tr>
-										<td>
-											<table class="table">
-												<tr><p style="color:green;">Ingredients you have:</p></tr>
-												<c:forEach items="${recipe.have}" var="hIng">
-													<tr>${hIng}</tr>
-													<br>
-												</c:forEach>
-											</table>
-										</td>
-										
-										<td>
-											<table class="table">
-												<tr><p style="color:red;">Additional Required Ingredients:</p></tr>
-												<c:forEach items="${recipe.extraIng}" var="ing">
-													
-													<tr>${ing}</tr>
-													<br>
-												</c:forEach>
-											</table>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						</c>
-			</c:forEach>
+			<tr>
+				<td><h3>Email:</h3></td>
+				<td><h3>naraya15@purdue.edu</h3></td>
+			</tr>
+			<tr>
+				<td><h3>Phone:</h3></td>
+				<td><h3>7657726726</h3></td>
+			</tr>
+			<tr>
+				<td><h3>Other Applications:</h3></td>
+				<td>
+					<table class="table">
+						<tr><td><a href="https://soggyapples.herokuapp.com">Soggy Apples</a>: The website where you can rate and comment on movies!</td></tr>
+					</table>
+				</td>
+			</tr>
+			
 		</table>
 	</div>
-	
+
 </body>
 
 <footer class="w3-container w3-dark-grey" style="padding:32px">
