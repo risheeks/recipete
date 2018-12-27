@@ -113,7 +113,7 @@ public class HomeController {
       return "/recipes";
   }
   
-//Called when the user searches for recipes using a main ingredient
+  //Called when the user clicks on a recipe from the list of recipes obtained by searching using a main ingredient
   @RequestMapping(value = { "/pick-{recipe}" }, method = RequestMethod.GET)
   public String pickRecipe(@PathVariable String recipe, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
@@ -126,6 +126,13 @@ public class HomeController {
 	  System.out.println("image_src: " + rec.label);
 	  session.setAttribute("rec", rec);
 	  return "/pick";
+  }
+  
+//Called when the user clicks on a recipe from the list of recipes obtained by searching using a main ingredient
+  @RequestMapping(value = { "/about" }, method = RequestMethod.GET)
+  public String about(HttpServletRequest request) throws Exception {
+	  
+	  return "/about";
   }
   
   //The service for the API call with gets the recipes list based on the main ingredient "main"
@@ -202,7 +209,9 @@ public class HomeController {
 			  if(s.contains(t) || t.contains(s)) {
 				  //System.out.println(r.label + ": " + s + ", size: " + r.ingredients.length);
 				  check = true;
-				  r.have.add(s);
+				  if(!r.have.contains(s)) {
+					  r.have.add(s);
+				  }
 			  }
 		  }
 		  if(check == false) {
