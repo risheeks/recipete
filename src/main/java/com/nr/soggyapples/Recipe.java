@@ -8,6 +8,7 @@ public class Recipe {
 	String label;
 	String image_src;
 	String uri;
+	String url;
 	String[] ingredients;
 	List<String> extraIng;
 	List<String> have;
@@ -16,10 +17,11 @@ public class Recipe {
 		
 	}
 	
-	public Recipe(String label, String image_src, String uri, String[] ingredients) {
+	public Recipe(String label, String image_src, String uri, String url, String[] ingredients) {
 		this.label = label;
 		this.image_src = image_src;
 		this.uri = uri.split("#")[1];
+		this.url = url;
 		this.ingredients = ingredients;
 		extraIng = new ArrayList<String>();
 		have = new ArrayList<String>();
@@ -71,6 +73,14 @@ public class Recipe {
 
 	public void setHave(List<String> have) {
 		this.have = have;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }

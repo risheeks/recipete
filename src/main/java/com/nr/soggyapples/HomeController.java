@@ -75,9 +75,7 @@ public class HomeController {
   public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
-	  System.out.println(request.getParameterMap().containsKey("vegan"));
-	  System.out.println(request.getParameterMap().containsKey("veg"));
-	  System.out.println(request.getParameterMap().containsKey("peanut"));
+	  System.out.println(type);
 	  
 	  if(request.getParameterMap().containsKey("vegan")) {
 		  health.add("vegan");
@@ -105,7 +103,7 @@ public class HomeController {
     		  aing[j] = ingredient.getString("text");
           }
     	  
-          recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), aing));
+          recipes.add(new Recipe(arr1.getString("label"), arr1.getString("image"), arr1.getString("uri"), arr1.getString("url"), aing));
       }
       ingredients.add(mainIng);
       //System.out.println(mainIng);
