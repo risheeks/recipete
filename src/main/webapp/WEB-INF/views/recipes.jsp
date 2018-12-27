@@ -54,6 +54,10 @@
 	
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
+	<div class="starter-template w3-padding">
+		<h2>Main Ingredient: "${mainIng}"</h2>
+	</div>
+	<c:if test="${not empty recipes}">
 	<div class="w3-container w3-white w3-light-grey">
 		<table class="table table-striped">
 			<tr>
@@ -101,6 +105,7 @@
 			</c:forEach>
 		</table>
 	</div>
+	</c:if>
 	
 </body>
 

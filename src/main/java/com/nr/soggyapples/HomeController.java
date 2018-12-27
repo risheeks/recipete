@@ -110,6 +110,7 @@ public class HomeController {
 	  recipes = sort(recipes);
 	  Collections.sort(recipes, new SortbyExtraIng());
       session.setAttribute("recipes", recipes);
+      session.setAttribute("mainIng", mainIng);
       return "/recipes";
   }
   

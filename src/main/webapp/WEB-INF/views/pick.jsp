@@ -55,12 +55,10 @@
 	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<div class="w3-container w3-white w3-light-grey">
-		
+		<h1>${rec.label}</h1>
+		<img src="${rec.image_src}"/>
 		<table class="table table-striped">
-			<tr>
-				<td><img height="300" width="250" src="${rec.image_src}"/> </td>
-				<td><h1>${rec.label}</h1></td>
-			</tr>
+			
 			<tr>
 				<td>
 					<table class="table">
