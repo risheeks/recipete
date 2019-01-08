@@ -75,7 +75,12 @@ public class HomeController {
   public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
-	  System.out.println(type);
+	  //System.out.println(type);
+	  
+	  if(mainIng.equals("")) {
+		  session.setAttribute("HomeError", "The main ingredient cannot be empty!");
+		  return "/home";
+	  }
 	  
 	  if(request.getParameterMap().containsKey("vegan")) {
 		  health.add("vegan");
@@ -111,6 +116,7 @@ public class HomeController {
 	  Collections.sort(recipes, new SortbyExtraIng());
       session.setAttribute("recipes", recipes);
       session.setAttribute("mainIng", mainIng);
+      session.removeAttribute("HomeError");
       return "/recipes";
   }
   
@@ -238,6 +244,10 @@ class SortbyExtraIng implements Comparator<Recipe>
     // roll number 
     public int compare(Recipe a, Recipe b) 
     { 
-        return a.extraIng.size() - b.extraIng.size(); 
+    	if(b.have.size() == a.have.size()) {
+    		return a.extraIng.size() - b.extraIng.size();
+    	} else {
+    		return b.have.size() - a.have.size(); 
+    	}
     } 
 } 

@@ -114,20 +114,23 @@
 	</nav>
 	
 	<div class="w3-container w3-padding w3-border">
-	  	<div class="w3-container w3-padding w3-cyan">
-	          <h4>List all ingredients you wish to use one-by-one:</h4>
-	          
-	  	</div>
+	  	
 	  	
 	  	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 	  	<br>
+	  	<c:if test="${not empty HomeError}">
+	  		<p style="color:red;">${HomeError}</p>
+	  	</c:if>
 	  	
 	  	<div style="display: flex;">
 	  	</div>
 	  	
 	  	<div style="display: flex;">
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
+				<div class="w3-container w3-padding w3-cyan">
+	          		<h4>Add your diet restrictions and select a main Ingredient:</h4>
+	  			</div>
 				<form action="/api" method="GET">
 					<h4>Diet:</h4>
 					<div class="custom-select" style="width:200px;">
@@ -153,6 +156,9 @@
 			</div>
 			
 			<div style="flex: 1; display: inline-block; padding: 1rem;">
+				<div class="w3-container w3-padding w3-cyan">
+	          		<h4>List all ingredients you wish to use one-by-one:</h4>
+	  			</div>
 			  	<form action="/" method="POST">
 			  		<h4>Other Ingredients:</h4>
 			  		<p><input class="w3-input w3-border" type="text" name="ingredient" placeholder="Enter ingredient" ></p>
