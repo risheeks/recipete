@@ -19,7 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +35,7 @@ public class HomeController {
   List<String> health = new ArrayList<String>();
   List<Recipe> recipes;
   
-  @RequestMapping(value = { "/" }, method = RequestMethod.GET)
+  @GetMapping(value = { "/" })
   public String welcome(Map<String, Object> model, HttpServletRequest request) throws IOException {
 	  HttpSession session = request.getSession();
 	  ingredients.clear();
@@ -44,7 +46,7 @@ public class HomeController {
   
   
   //Called when the user attempts to add ingredients to the list of ingredients
-  @RequestMapping(value = { "/" }, method = RequestMethod.POST)
+  @PostMapping(value = { "/" })
   public String welcome(@RequestParam("ingredient") String ingredient, HttpServletRequest request) throws IOException {
 	  if(!ingredient.trim().equals("") && !ingredients.contains(ingredient.trim())) {
 		  HttpSession session = request.getSession();
@@ -56,7 +58,7 @@ public class HomeController {
   
   
   //Called when the user attempts to add ingredients to the list of ingredients
-  @RequestMapping(value = { "/remove-{ingredient}" }, method = RequestMethod.GET)
+  @GetMapping(value = { "/remove-{ingredient}" })
   public String remove(HttpServletRequest request, @PathVariable String ingredient) throws IOException {
 	  HttpSession session = request.getSession();
 	  String p="";
@@ -71,7 +73,7 @@ public class HomeController {
   
   
   //Called when the user searches for recipes using a main ingredient
-  @RequestMapping(value = { "/api" }, method = RequestMethod.GET)
+  @GetMapping(value = { "/api" })
   public String api(@RequestParam("main") String mainIng, @RequestParam("type") String type, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
 	  session.setAttribute("main", mainIng);
@@ -121,7 +123,7 @@ public class HomeController {
   }
   
   //Called when the user clicks on a recipe from the list of recipes obtained by searching using a main ingredient
-  @RequestMapping(value = { "/pick-{recipe}" }, method = RequestMethod.GET)
+  @GetMapping(value = { "/pick-{recipe}" })
   public String pickRecipe(@PathVariable String recipe, HttpServletRequest request) throws Exception {
 	  HttpSession session = request.getSession();
 	  Recipe rec = new Recipe();
@@ -136,7 +138,7 @@ public class HomeController {
   }
   
 //Called when the user clicks on a recipe from the list of recipes obtained by searching using a main ingredient
-  @RequestMapping(value = { "/about" }, method = RequestMethod.GET)
+  @GetMapping(value = { "/about" })
   public String about(HttpServletRequest request) throws Exception {
 	  
 	  return "/about";
