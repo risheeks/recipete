@@ -62,17 +62,17 @@
 			</tr>
 			<tr>
 				<td><h3>Email:</h3></td>
-				<td><h3>naraya15@purdue.edu</h3></td>
+				<td><h3>risheeks@gmail.com</h3></td>
 			</tr>
 			<tr>
 				<td><h3>Phone:</h3></td>
-				<td><h3>7657726726</h3></td>
+				<td><h3>6369544523</h3></td>
 			</tr>
 			<tr>
 				<td><h3>Other Applications:</h3></td>
 				<td>
 					<table class="table">
-						<tr><td><a href="https://soggyapples.herokuapp.com">Soggy Apples</a>: The website where you can rate and comment on movies!</td></tr>
+						<tr><td><a href="https://github.com/risheeks/soggyapples">Soggy Apples</a>: The website where you can rate and comment on movies!</td></tr>
 					</table>
 				</td>
 			</tr>

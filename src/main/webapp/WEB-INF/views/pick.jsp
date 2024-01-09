@@ -56,7 +56,7 @@
 	
 	<div class="w3-container w3-white w3-light-grey">
 		<h1>${rec.label}</h1>
-		<img src="${rec.image_src}"/>
+		<img style="margin:10%" src="${rec.image_src}"/>
 		<table class="table table-striped">
 			
 			<tr>
